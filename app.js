@@ -68,3 +68,28 @@ async function router() {
 // Escuchar cambios en la URL y al cargar el sitio por primera vez
 window.addEventListener('hashchange', router);
 window.addEventListener('DOMContentLoaded', router);
+
+// Lógica para el menú móvil
+const mobileMenuButton = document.getElementById('mobile-menu-button');
+const mobileMenu = document.getElementById('mobile-menu');
+const menuIcon = document.getElementById('menu-icon');
+const mobileLinks = document.querySelectorAll('.mobile-nav-link');
+
+// Alternar menú al hacer clic en el botón de hamburguesa
+mobileMenuButton.addEventListener('click', () => {
+    mobileMenu.classList.toggle('hidden');
+    // Cambia el ícono de barras a una 'X' cuando esté abierto
+    if (mobileMenu.classList.contains('hidden')) {
+        menuIcon.className = 'fa-solid fa-bars';
+    } else {
+        menuIcon.className = 'fa-solid fa-xmark';
+    }
+});
+
+// Cerrar el menú automáticamente al hacer clic en cualquier enlace
+mobileLinks.forEach(link => {
+    link.addEventListener('click', () => {
+        mobileMenu.classList.add('hidden');
+        menuIcon.className = 'fa-solid fa-bars';
+    });
+});
