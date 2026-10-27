@@ -1,95 +1,91 @@
-async function router() {
-    // 1. Obtener el hash de la URL actual (ej: 'sobre-mi') o ir a 'inicio' por defecto
-    const hash = window.location.hash.replace('#', '') || 'inicio';
-    const container = document.getElementById('content');
+/* ==========================================================================
+   Navegación por pestañas (#hash)
+   Todo el contenido ya está escrito en index.html (scrapeable). Este script
+   solo muestra la sección del #hash actual y marca el enlace activo del menú.
+   ========================================================================== */
 
-    try {
-        // 2. Buscar e importar el archivo HTML correspondiente desde la carpeta de componentes
-        const response = await fetch(`components/${hash}.html`);
-        
-        if (!response.ok) {
-            throw new Error('Página no encontrada');
-        }
+const DEFAULT_SECTION = 'inicio';
 
-        const htmlContent = await response.text();
-        
-        // 3. Inyectar el código HTML dentro de la sección principal con una animación
-        container.innerHTML = `<div class="animate-fade-in">${htmlContent}</div>`;
+const sections = document.querySelectorAll('.page-section');
+const tabLinks = document.querySelectorAll('[data-tab]');
+const experienceToggle = document.querySelector('[data-group="experiencia"]');
+const main = document.getElementById('content');
 
-    } catch (error) {
-        console.error(error);
-        container.innerHTML = `
-            <div class="text-center py-20">
-                <h2 class="text-2xl font-bold text-red-400">Error 404</h2>
-                <p class="text-slate-400">La sección solicitada no existe.</p>
-            </div>`;
-    }
-
-    // 4. Actualizar visualmente qué pestaña está seleccionada en el menú
-    const navLinks = document.querySelectorAll('.nav-link');
-    navLinks.forEach(link => {
-        const tabName = link.getAttribute('data-tab');
-
-        // Si el elemento no tiene data-tab (como el botón principal de Experiencia), lo saltamos
-        if (!tabName) return;
-
-        // CASO ESPECIAL: Si es el botón de "Contactar"
-        if (tabName === 'contacto') {
-            if (hash === 'contacto') {
-                link.classList.remove('bg-blue-600');
-                link.classList.add('bg-blue-500', 'ring-2', 'ring-blue-400');
-            } else {
-                link.classList.remove('bg-blue-500', 'ring-2', 'ring-blue-400');
-                link.classList.add('bg-blue-600');
-            }
-            return;
-        }
-
-        // CASO NORMAL Y DROPDOWNS: Para el resto de las pestañas de texto
-        if (tabName === hash) {
-            // Si es un link dentro del dropdown, dale un fondo sutil además del texto azul
-            if (hash === 'experiencia-academica' || hash === 'experiencia-laboral') {
-                link.classList.add('text-blue-400', 'bg-slate-900/50');
-                link.classList.remove('text-slate-400');
-            } else {
-                link.classList.add('text-blue-400', 'border-b-2', 'border-blue-400');
-                link.classList.remove('text-slate-400');
-            }
-        } else {
-            link.classList.remove('text-blue-400', 'border-b-2', 'border-blue-400', 'bg-slate-900/50');
-            link.classList.add('text-slate-400');
-        }
-    });
-
-    // Mover la pantalla al inicio de la pestaña suavemente
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
-// Escuchar cambios en la URL y al cargar el sitio por primera vez
-window.addEventListener('hashchange', router);
-window.addEventListener('DOMContentLoaded', router);
-
-// Lógica para el menú móvil
 const mobileMenuButton = document.getElementById('mobile-menu-button');
 const mobileMenu = document.getElementById('mobile-menu');
 const menuIcon = document.getElementById('menu-icon');
-const mobileLinks = document.querySelectorAll('.mobile-nav-link');
 
-// Alternar menú al hacer clic en el botón de hamburguesa
-mobileMenuButton.addEventListener('click', () => {
-    mobileMenu.classList.toggle('hidden');
-    // Cambia el ícono de barras a una 'X' cuando esté abierto
-    if (mobileMenu.classList.contains('hidden')) {
-        menuIcon.className = 'fa-solid fa-bars';
+function showSection(id) {
+    const target = document.getElementById(id);
+    const isSection = target !== null && target.classList.contains('page-section');
+
+    // 1. Ocultar todas las secciones y mostrar solo la solicitada (con animación)
+    sections.forEach(section => section.classList.remove('is-active', 'animate-fade-in'));
+
+    const oldNotFound = document.getElementById('not-found');
+    if (oldNotFound) oldNotFound.remove();
+
+    if (isSection) {
+        void target.offsetWidth; // reinicia la animación de entrada
+        target.classList.add('is-active', 'animate-fade-in');
     } else {
-        menuIcon.className = 'fa-solid fa-xmark';
+        // 2. Si la sección no existe, mostrar el mensaje de error
+        main.insertAdjacentHTML('beforeend', `
+            <div id="not-found" class="not-found animate-fade-in">
+                <h2 class="not-found__title">Error 404</h2>
+                <p class="not-found__text">La sección solicitada no existe.</p>
+            </div>`);
     }
+
+    // 3. Marcar el enlace activo en el menú de escritorio y en el móvil
+    tabLinks.forEach(link => {
+        const active = link.dataset.tab === id;
+        link.classList.toggle('is-active', active);
+        if (active) {
+            link.setAttribute('aria-current', 'page');
+        } else {
+            link.removeAttribute('aria-current');
+        }
+    });
+
+    if (experienceToggle) {
+        experienceToggle.classList.toggle('is-active', id.startsWith('experiencia-'));
+    }
+}
+
+function router() {
+    const id = decodeURIComponent(window.location.hash.slice(1)) || DEFAULT_SECTION;
+    showSection(id);
+
+    // Volver al inicio de la página al cambiar de pestaña
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+/* Menú móvil ---------------------------------------------------------------- */
+
+function setMobileMenu(open) {
+    mobileMenu.hidden = !open;
+    mobileMenuButton.setAttribute('aria-expanded', String(open));
+    mobileMenuButton.setAttribute('aria-label', open ? 'Cerrar menú' : 'Abrir menú');
+    menuIcon.className = open ? 'fa-solid fa-xmark' : 'fa-solid fa-bars';
+}
+
+mobileMenuButton.addEventListener('click', () => setMobileMenu(mobileMenu.hidden));
+
+// Cerrar el menú al elegir cualquier enlace
+mobileMenu.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => setMobileMenu(false));
 });
 
-// Cerrar el menú automáticamente al hacer clic en cualquier enlace
-mobileLinks.forEach(link => {
-    link.addEventListener('click', () => {
-        mobileMenu.classList.add('hidden');
-        menuIcon.className = 'fa-solid fa-bars';
-    });
+// Cerrar el menú si la pantalla pasa a tamaño escritorio
+window.matchMedia('(min-width: 768px)').addEventListener('change', event => {
+    if (event.matches) setMobileMenu(false);
 });
+
+/* Inicio -------------------------------------------------------------------- */
+
+window.addEventListener('hashchange', router);
+router();
+
+// Al cargar con un #hash el navegador salta solo a la sección; se corrige para partir arriba
+window.addEventListener('load', () => window.scrollTo(0, 0));

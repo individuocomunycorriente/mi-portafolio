@@ -4,77 +4,301 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Danko Leiva Contreras | Ingeniero de Software</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <meta name="description" content="Danko Leiva Contreras, estudiante de Ingeniería Civil en Computación de la Pontificia Universidad Católica de Chile. Enfocado en el desarrollo de sistemas eficientes, aprendizaje profundo y ciberseguridad.">
+    <meta name="author" content="Danko Leiva Contreras">
+    <meta name="theme-color" content="#020617">
+    <link rel="canonical" href="https://dankoleivacontreras.dev/">
+
+    <!-- Open Graph (vista previa al compartir el enlace) -->
+    <meta property="og:type" content="profile">
+    <meta property="og:title" content="Danko Leiva Contreras | Ingeniero de Software">
+    <meta property="og:description" content="Estudiante de Ingeniería Civil en Computación de la Pontificia Universidad Católica de Chile. Enfocado en el desarrollo de sistemas eficientes, aprendizaje profundo y ciberseguridad.">
+    <meta property="og:url" content="https://dankoleivacontreras.dev/">
+    <meta property="og:locale" content="es_CL">
+
+    <!-- Datos estructurados (schema.org) para buscadores y scrapers -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Danko Leiva Contreras",
+        "url": "https://dankoleivacontreras.dev/",
+        "email": "mailto:danko.leiva@uc.cl",
+        "telephone": "+56953760336",
+        "alumniOf": {
+            "@type": "CollegeOrUniversity",
+            "name": "Pontificia Universidad Católica de Chile"
+        },
+        "sameAs": [
+            "https://www.linkedin.com/in/danko-leiva-contreras-760236359",
+            "https://github.com/individuocomunycorriente"
+        ]
+    }
+    </script>
+
+    <!-- Con JavaScript se muestra una sección a la vez. Sin JavaScript (o para un scraper) todo el contenido queda visible. -->
+    <script>document.documentElement.classList.add('js');</script>
+
+    <link rel="icon" type="image/png" href="img/ed_icon.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="styles.css">
-    
-    <link rel="icon" type="image/png" href="ed_icon.png">   
 </head>
-<body class="bg-slate-900 text-slate-100 font-sans antialiased min-h-screen flex flex-col justify-between">
+<body>
 
-    <nav class="fixed top-0 left-0 w-full bg-slate-950/90 backdrop-blur-md border-b border-slate-800 z-50">
-        <div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
-            
-            <a href="#inicio" class="flex items-center justify-center transition-transform active:scale-95 sm:hover:scale-105 duration-200 focus:outline-none" title="Ir al inicio">
-                <img src="ed_icon.png" alt="Logo Danko Leiva" class="h-8 w-auto md:h-9 object-contain" />
+    <!-- ===================== NAVEGACIÓN ===================== -->
+    <header class="site-header">
+        <nav class="nav" aria-label="Principal">
+            <a href="#inicio" class="nav__brand" title="Ir al inicio">
+                <img src="img/ed_icon.png" alt="Logo Danko Leiva" class="nav__logo">
             </a>
 
-            <div class="hidden md:flex space-x-6 text-sm font-medium items-center">
-                <a href="#inicio" data-tab="inicio" class="nav-link py-2 px-1 transition-colors">Inicio</a>
-                <a href="#educacion" data-tab="educacion" class="nav-link py-2 px-1 transition-colors">Educación</a>
-                
-                <div class="relative group py-2">
-                    <button class="nav-link flex items-center gap-1 text-slate-400 group-hover:text-blue-400 transition-colors focus:outline-none">
-                        Experiencia <i class="fa-solid fa-chevron-down text-[10px] transition-transform group-hover:rotate-180"></i>
+            <ul class="nav__links">
+                <li><a href="#inicio" data-tab="inicio" class="nav__link">Inicio</a></li>
+                <li><a href="#educacion" data-tab="educacion" class="nav__link">Educación</a></li>
+                <li class="nav__dropdown">
+                    <button type="button" class="nav__link nav__dropdown-toggle" data-group="experiencia" aria-haspopup="true">
+                        Experiencia <i class="fa-solid fa-chevron-down nav__chevron" aria-hidden="true"></i>
                     </button>
-                    <div class="absolute top-full left-0 mt-1 w-52 bg-slate-950 border border-slate-800 rounded-xl shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 p-1.5 space-y-1">
-                        <a href="#experiencia-academica" data-tab="experiencia-academica" class="nav-link block px-3 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-900 transition-colors text-xs">
-                            <i class="fa-solid fa-graduation-cap mr-2 text-blue-400"></i> Académica
+                    <ul class="nav__menu">
+                        <li>
+                            <a href="#experiencia-academica" data-tab="experiencia-academica" class="nav__menu-link">
+                                <i class="fa-solid fa-graduation-cap icon--blue" aria-hidden="true"></i> Académica
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#experiencia-laboral" data-tab="experiencia-laboral" class="nav__menu-link">
+                                <i class="fa-solid fa-briefcase icon--indigo" aria-hidden="true"></i> Laboral
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li><a href="#proyectos" data-tab="proyectos" class="nav__link">Portafolio</a></li>
+                <li><a href="#contacto" data-tab="contacto" class="btn btn--primary btn--sm nav__cta">Contactar</a></li>
+            </ul>
+
+            <button type="button" id="mobile-menu-button" class="nav__toggle" aria-controls="mobile-menu" aria-expanded="false" aria-label="Abrir menú">
+                <i class="fa-solid fa-bars" id="menu-icon" aria-hidden="true"></i>
+            </button>
+        </nav>
+
+        <div id="mobile-menu" class="mobile-menu" hidden>
+            <a href="#inicio" data-tab="inicio" class="mobile-menu__link">Inicio</a>
+            <a href="#educacion" data-tab="educacion" class="mobile-menu__link">Educación</a>
+
+            <div class="mobile-menu__group">
+                <span class="mobile-menu__label">Experiencia</span>
+                <a href="#experiencia-academica" data-tab="experiencia-academica" class="mobile-menu__link mobile-menu__link--sub">
+                    <i class="fa-solid fa-graduation-cap icon--blue" aria-hidden="true"></i> Académica
+                </a>
+                <a href="#experiencia-laboral" data-tab="experiencia-laboral" class="mobile-menu__link mobile-menu__link--sub">
+                    <i class="fa-solid fa-briefcase icon--indigo" aria-hidden="true"></i> Laboral
+                </a>
+            </div>
+
+            <a href="#proyectos" data-tab="proyectos" class="mobile-menu__link mobile-menu__link--divided">Portafolio</a>
+            <a href="#contacto" data-tab="contacto" class="btn btn--primary btn--block">Contactar</a>
+        </div>
+    </header>
+
+    <main id="content" class="site-main">
+
+        <!-- ===================== INICIO ===================== -->
+        <section id="inicio" class="page-section hero">
+            <div class="container container--md">
+                <p class="hero__kicker">Hola, mi nombre es</p>
+                <h1 class="hero__title">Danko Leiva Contreras</h1>
+                <p class="hero__lead">
+                    Estudiante de Ingeniería Civil en Computación de la Pontificia Universidad Católica de Chile. Enfocado en el desarrollo de sistemas eficientes, aprendizaje profundo y ciberseguridad.
+                </p>
+
+                <div class="hero__actions">
+                    <a href="#proyectos" class="btn btn--gradient">Ver Proyectos</a>
+                    <a href="CV.pdf" target="_blank" rel="noopener" class="btn btn--outline">
+                        <i class="fa-solid fa-file-pdf" aria-hidden="true"></i> Ver CV
+                    </a>
+                </div>
+
+                <ul class="social social--hero">
+                    <li>
+                        <a href="https://www.linkedin.com/in/danko-leiva-contreras-760236359" target="_blank" rel="noopener noreferrer" class="social__link" title="LinkedIn" aria-label="LinkedIn">
+                            <i class="fa-brands fa-linkedin" aria-hidden="true"></i>
                         </a>
-                        <a href="#experiencia-laboral" data-tab="experiencia-laboral" class="nav-link block px-3 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-900 transition-colors text-xs">
-                            <i class="fa-solid fa-briefcase mr-2 text-indigo-400"></i> Laboral
+                    </li>
+                    <li>
+                        <a href="https://github.com/individuocomunycorriente" target="_blank" rel="noopener noreferrer" class="social__link social__link--github" title="GitHub" aria-label="GitHub">
+                            <i class="fa-brands fa-github" aria-hidden="true"></i>
                         </a>
+                    </li>
+                    <li>
+                        <a href="mailto:danko.leiva@uc.cl" class="social__link" title="Correo Electrónico" aria-label="Correo Electrónico">
+                            <i class="fa-solid fa-envelope" aria-hidden="true"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- ===================== EDUCACIÓN ===================== -->
+        <section id="educacion" class="page-section">
+            <div class="container">
+                <h2 class="section-title">Formación Académica</h2>
+
+                <div class="stack">
+                    <article class="card edu-card">
+                        <div class="edu-card__info">
+                            <h3 class="edu-card__degree">Licenciatura en Ingeniería de Software</h3>
+                            <p class="edu-card__school">Pontificia Universidad Católica de Chile</p>
+                            <p class="edu-card__meta">Escuela de Ingeniería · Marzo 2022 – Julio 2026</p>
+                        </div>
+                        <dl class="stats">
+                            <div class="stat">
+                                <dt class="stat__label">Promedio</dt>
+                                <dd class="stat__value">5.7</dd>
+                            </div>
+                            <div class="stat">
+                                <dt class="stat__label">Ranking</dt>
+                                <dd class="stat__value stat__value--indigo">260 / 898</dd>
+                            </div>
+                        </dl>
+                    </article>
+
+                    <article class="card edu-card">
+                        <div class="edu-card__info">
+                            <h3 class="edu-card__degree">Magíster en Ciencias de la Ingeniería</h3>
+                            <p class="edu-card__school">Pontificia Universidad Católica de Chile</p>
+                            <p class="edu-card__meta">Escuela de Ingeniería · Julio 2026 – Presente</p>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===================== EXPERIENCIA ACADÉMICA ===================== -->
+        <section id="experiencia-academica" class="page-section">
+            <div class="container">
+                <h2 class="section-title">Experiencia Académica</h2>
+
+                <ol class="timeline">
+                    <li class="timeline__item">
+                        <span class="timeline__dot timeline__dot--blue" aria-hidden="true"></span>
+                        <article class="timeline__card">
+                            <p class="timeline__period timeline__period--blue">Agosto – Diciembre del 2025</p>
+                            <h3 class="timeline__title">Ayudante de Cátedra</h3>
+                            <p class="timeline__subtitle">Introducción a la Programación</p>
+                            <p class="timeline__desc">Apoyo en gestión de actividades de participación, resolución de consultas sobre contenidos técnicos y supervisión de evaluaciones oficiales.</p>
+                        </article>
+                    </li>
+
+                    <li class="timeline__item timeline__item--reverse">
+                        <span class="timeline__dot timeline__dot--indigo" aria-hidden="true"></span>
+                        <article class="timeline__card">
+                            <p class="timeline__period timeline__period--indigo">Agosto – Diciembre del 2024</p>
+                            <h3 class="timeline__title">Ayudante Corrector</h3>
+                            <p class="timeline__subtitle">Programación Avanzada</p>
+                            <p class="timeline__desc">Corrección de tareas de código complejo, moderación y resolución de dudas técnicas en foros asincrónicos alojados en GitHub.</p>
+                        </article>
+                    </li>
+
+                    <li class="timeline__item">
+                        <span class="timeline__dot timeline__dot--blue" aria-hidden="true"></span>
+                        <article class="timeline__card">
+                            <p class="timeline__period timeline__period--blue">Agosto – Diciembre del 2023</p>
+                            <h3 class="timeline__title">Ayudante de SAP</h3>
+                            <p class="timeline__subtitle">Introducción a la Programación</p>
+                            <p class="timeline__desc">Atención presencial en Salas de Ayuda, guiando a estudiantes en lógica de programación y resolución de algoritmos.</p>
+                        </article>
+                    </li>
+                </ol>
+            </div>
+        </section>
+
+        <!-- ===================== EXPERIENCIA LABORAL ===================== -->
+        <section id="experiencia-laboral" class="page-section">
+            <div class="container container--sm text-center">
+                <div class="badge-icon" aria-hidden="true">
+                    <i class="fa-solid fa-rocket"></i>
+                </div>
+                <h2 class="section-title section-title--center">Experiencia Laboral</h2>
+                <p class="section-lead">¡Listo para el primer gran desafío en la industria!</p>
+
+                <div class="divider-block">
+                    <a href="#contacto" class="btn btn--soft">¿Hablamos de oportunidades?</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===================== PORTAFOLIO ===================== -->
+        <section id="proyectos" class="page-section">
+            <div class="container">
+                <h2 class="section-title section-title--center">Portafolio de Proyectos</h2>
+
+                <div class="project-grid">
+                    <article class="project-card project-card--featured">
+                        <div class="project-card__media">
+                            <img src="img/artisan-logo.jpeg" alt="Logo de Artisan, elaboración artesanal" class="project-card__logo" width="447" height="447" loading="lazy" decoding="async">
+                        </div>
+                        <div class="project-card__body">
+                            <p class="project-card__meta">Proyecto de Especialidad · 2do Semestre 2025</p>
+                            <h3 class="project-card__title">Sistema ERP para Manufactura</h3>
+                            <p class="project-card__client">
+                                <i class="fa-solid fa-industry" aria-hidden="true"></i> Cliente: Artisan
+                            </p>
+                            <p class="project-card__desc">Desarrollado en equipo para un cliente real, cubriendo el flujo completo: compra de materia prima, logística multi-bodega, etiquetado, producción, reutilización de sobrantes en nuevos productos, y venta y envío del producto final. Colaboré en frontend y backend.</p>
+                            <ul class="project-card__tags">
+                                <li class="tag">React</li>
+                                <li class="tag">TypeScript</li>
+                                <li class="tag">Koa</li>
+                                <li class="tag">PostgreSQL</li>
+                                <li class="tag">Sequelize</li>
+                                <li class="tag">Docker</li>
+                                <li class="tag">AWS</li>
+                                <li class="tag">JWT</li>
+                            </ul>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===================== CONTACTO ===================== -->
+        <section id="contacto" class="page-section">
+            <div class="container container--xs text-center">
+                <h2 class="section-title section-title--center">¿Trabajamos juntos?</h2>
+                <p class="section-text">
+                    Estoy disponible para oportunidades de práctica, proyectos freelance o posiciones de jornada completa una vez finalizada mi carrera.
+                </p>
+
+                <div class="card contact-card">
+                    <ul class="social social--contact">
+                        <li>
+                            <a href="https://www.linkedin.com/in/danko-leiva-contreras-760236359" target="_blank" rel="noopener noreferrer" class="social__link" title="LinkedIn" aria-label="LinkedIn">
+                                <i class="fa-brands fa-linkedin" aria-hidden="true"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://github.com/individuocomunycorriente" target="_blank" rel="noopener noreferrer" class="social__link social__link--github" title="GitHub" aria-label="GitHub">
+                                <i class="fa-brands fa-github" aria-hidden="true"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="mailto:danko.leiva@uc.cl" class="social__link" title="Correo Electrónico" aria-label="Correo Electrónico">
+                                <i class="fa-solid fa-envelope" aria-hidden="true"></i>
+                            </a>
+                        </li>
+                    </ul>
+
+                    <div class="contact-card__phone">
+                        <p class="contact-card__label">Teléfono Directo</p>
+                        <a href="tel:+56953760336" class="contact-card__number">+56 9 5376 0336</a>
                     </div>
                 </div>
-                <a href="#proyectos" data-tab="proyectos" class="nav-link py-2 px-1 transition-colors">Portafolio</a>
-                <a href="#contacto" data-tab="contacto" class="nav-link bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
-                    Contactar
-                </a>
             </div>
+        </section>
 
-            <div class="flex items-center md:hidden">
-                <button id="mobile-menu-button" class="text-slate-400 hover:text-white focus:outline-none text-xl p-2">
-                    <i class="fa-solid fa-bars" id="menu-icon"></i>
-                </button>
-            </div>
-        </div>
-
-        <div id="mobile-menu" class="hidden md:hidden bg-slate-950/95 border-b border-slate-800 px-4 pt-2 pb-4 space-y-3 font-medium text-sm">
-            <a href="#inicio" data-tab="inicio" class="mobile-nav-link block py-2 text-slate-400 hover:text-white transition-colors">Inicio</a>
-            <a href="#educacion" data-tab="educacion" class="mobile-nav-link block py-2 text-slate-400 hover:text-white transition-colors">Educación</a>
-            
-            <div class="border-t border-slate-800/50 pt-2 space-y-1">
-                <span class="text-xs text-slate-500 uppercase tracking-wider block px-1 mb-1">Experiencia</span>
-                <a href="#experiencia-academica" data-tab="experiencia-academica" class="mobile-nav-link block py-2 pl-3 text-slate-400 hover:text-white transition-colors text-xs">
-                    <i class="fa-solid fa-graduation-cap mr-2 text-blue-400"></i> Académica
-                </a>
-                <a href="#experiencia-laboral" data-tab="experiencia-laboral" class="mobile-nav-link block py-2 pl-3 text-slate-400 hover:text-white transition-colors text-xs">
-                    <i class="fa-solid fa-briefcase mr-2 text-indigo-400"></i> Laboral
-                </a>
-            </div>
-            
-            <a href="#proyectos" data-tab="proyectos" class="mobile-nav-link block py-2 border-t border-slate-800/50 pt-3 text-slate-400 hover:text-white transition-colors">Portafolio</a>
-            <a href="#contacto" data-tab="contacto" class="mobile-nav-link block text-center bg-blue-600 hover:bg-blue-500 text-white py-2.5 rounded-xl transition-colors font-medium">
-                Contactar
-            </a>
-        </div>
-    </nav>
-
-    <main id="content" class="flex-grow pt-20 md:pt-24 pb-12">
     </main>
 
-    <footer class="py-6 bg-slate-950 border-t border-slate-800 text-center text-slate-600 text-xs">
-        
+    <footer class="site-footer">
+        <p>© 2026 Danko Leiva Contreras</p>
     </footer>
 
     <script src="app.js"></script>
